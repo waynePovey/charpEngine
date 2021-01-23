@@ -1,7 +1,5 @@
-﻿using System;
-using OpenTK.Mathematics;
+﻿using OpenTK.Mathematics;
 using OpenTK.Windowing.Desktop;
-using OpenTK;
 
 namespace CharpEngine
 {
