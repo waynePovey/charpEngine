@@ -12,15 +12,13 @@ namespace CharpEngine
                 IsMultiThreaded = true,
                 RenderFrequency = 120,
                 UpdateFrequency = 120
-
             };
 
             var nwSettings = new NativeWindowSettings
             {
                 Title = "CharpEngine",
-                Size = new Vector2i(800, 600)
+                Size = new Vector2i(1200, 800)
             };
-
 
             var game = new Game(gwSettings, nwSettings);
             game.Run();

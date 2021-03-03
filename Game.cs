@@ -13,10 +13,14 @@ namespace CharpEngine
         private int _vertexBuffer;
         private int _vertexArray;
         private int _indicesBuffer;
-        private Matrix4 _view;
-        private Matrix4 _projection;
-        private float _time;
-        
+        private Camera _camera;
+        private const float _cameraSpeed = 1.5f;
+        private const float _cameraSensitivity = 0.1f;
+        private Vector2 _lastPos;
+        private float _aspectRatio;
+        private Vector3 _initCameraPos;
+
+
         private readonly float[] _vertices = {
             -0.5f, 0.5f, 0.5f, 1f, 0f, 0f,      // top right front
             -0.5f, -0.5f, 0.5f, 0f, 1f, 0f,      // bottom right front
@@ -52,13 +56,13 @@ namespace CharpEngine
             GameWindowSettings gameWindowSettings,
             NativeWindowSettings nativeWindowSettings) : base(gameWindowSettings, nativeWindowSettings)
         {
-            _time = 0;
+            _aspectRatio = (float) Size.X / Size.Y;
+            _initCameraPos = new Vector3(0.0f, 0.0f, 3.0f);
         }
 
 
         protected override void OnLoad()
         {
-
             GL.ClearColor(0.1f, 0.1f, 0.1f, 1.0f);
             GL.Enable(EnableCap.DepthTest);
 
@@ -90,7 +94,7 @@ namespace CharpEngine
             // CREATE AND BIND VAO
             _vertexArray = GL.GenVertexArray();
             GL.BindVertexArray(_vertexArray);
-            
+
             var positionLocation = _shader.GetAttribLocation("aPosition");
             GL.VertexAttribPointer(
                 positionLocation,
@@ -112,11 +116,10 @@ namespace CharpEngine
                 );
             GL.EnableVertexAttribArray(colorLocation);
 
-            _view = Matrix4.CreateTranslation(0.0f, 0.0f, -3.0f);
-            _projection = Matrix4.CreatePerspectiveFieldOfView(
-                MathHelper.DegreesToRadians(45.0f), 
-                Size.X / (float)Size.Y, 
-                0.1f, 100f);
+            _camera = new Camera(_initCameraPos, _aspectRatio, _cameraSpeed, _cameraSensitivity);
+
+            CursorVisible = false;
+            CursorGrabbed = true;
 
             base.OnLoad();
         }
@@ -124,17 +127,16 @@ namespace CharpEngine
 
         protected override void OnRenderFrame(FrameEventArgs args)
         {
-             
+
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
             GL.BindVertexArray(_vertexArray);
             _shader.Use();
 
-            _time += 0.1f;
-            var model = Matrix4.CreateRotationY(MathHelper.DegreesToRadians(45f)) * Matrix4.CreateRotationX(MathHelper.DegreesToRadians(25f));
+            var model = Matrix4.Identity;
 
             _shader.SetMatrix4(model, "model");
-            _shader.SetMatrix4(_view, "view");
-            _shader.SetMatrix4(_projection, "projection");
+            _shader.SetMatrix4(_camera.GetViewMatrix(), "view");
+            _shader.SetMatrix4(_camera.GetProjectionMatrix(), "projection");
 
 
             // DRAW OBJECTS
@@ -147,7 +149,56 @@ namespace CharpEngine
 
         protected override void OnUpdateFrame(FrameEventArgs args)
         {
-            if (KeyboardState.IsKeyDown(Keys.Escape)) Close();
+            if (!IsFocused)
+            {
+                return;
+            }
+
+            if (KeyboardState.IsKeyDown(Keys.Escape))
+            {
+                Close();
+            }
+
+            if (KeyboardState.IsKeyDown(Keys.W))
+            {
+                _camera.Forward(args.Time);
+            }
+
+            if (KeyboardState.IsKeyDown(Keys.S))
+            {
+                _camera.Back(args.Time);
+            }
+
+            if (KeyboardState.IsKeyDown(Keys.A))
+            {
+                _camera.StrafeLeft(args.Time);
+            }
+
+            if (KeyboardState.IsKeyDown(Keys.D))
+            {
+                _camera.StrafeRight(args.Time);
+            }
+
+            if (KeyboardState.IsKeyDown(Keys.Space))
+            {
+                _camera.Up(args.Time);
+            }
+
+            if (KeyboardState.IsKeyDown(Keys.LeftShift))
+            {
+                _camera.Down(args.Time);
+            }
+
+            var mousePosition = new Vector2(MouseState.X, MouseState.Y);
+            if (!_camera.HasMoved)
+            {
+                _camera.LastPosition = mousePosition;
+                _camera.HasMoved = true;
+            }
+            else
+            {
+                _camera.MouseUpdate(mousePosition);
+            }
 
             base.OnUpdateFrame(args);
         }
@@ -164,7 +215,7 @@ namespace CharpEngine
             GL.BindVertexArray(0);
             GL.DeleteVertexArray(_vertexArray);
             _shader.Dispose();
-            
+
             base.OnUnload();
         }
 
