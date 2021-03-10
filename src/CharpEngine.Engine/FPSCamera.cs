@@ -3,7 +3,7 @@ using OpenTK.Mathematics;
 
 namespace CharpEngine
 {
-    public class Camera
+    public class FPSCamera : ICamera
     {
         private Vector3 _position;
         private Vector3 _posX = Vector3.UnitX;
@@ -17,7 +17,7 @@ namespace CharpEngine
         private float _sensitivity;
 
 
-        public Camera(Vector3 position, float aspectRatio, float speed, float sensitivity)
+        public FPSCamera(Vector3 position, float aspectRatio, float speed, float sensitivity)
         {
             _position = position;
             _aspectRatio = aspectRatio;
