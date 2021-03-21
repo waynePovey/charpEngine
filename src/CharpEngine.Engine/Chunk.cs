@@ -1,6 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
 using CharpEngine.Shaders;
 using OpenTK.Graphics.ES30;
+using OpenTK.Mathematics;
 
 namespace CharpEngine
 {
@@ -51,7 +54,7 @@ namespace CharpEngine
                     {
                         if(_voxels[x, y, z].IsActive)
                         {
-                            CreateVoxel(x, y, z, _voxels[x, y, z].Type, counter);
+                            CreateVoxel(new Vector3(x, y, z), counter);
                             counter++;
                         }
                     }
@@ -124,18 +127,23 @@ namespace CharpEngine
             GL.DeleteVertexArray(_vertexArray);
         }
 
-        private void CreateVoxel(int x, int y, int z, VoxelType type, uint counter)
+        private void CreateVoxel(Vector3 pos, uint counter)
         {
+            Random rnd = new Random();
+            var r = (float)1 / 256 * rnd.Next(0, 255);
+            var g = (float)1 / 256 * rnd.Next(0, 255);
+            var b = (float)1 / 256 * rnd.Next(0, 255);
+
             _vertices.AddRange(new List<float>
             {
-                1f + x, 0f + y, 0f - z, 0f, 0f, 1f,     // front bottom right
-                0f + x, 0f + y, 0f - z, 0f, 1f, 0f,     // front bottom left
-                0f + x, 1f + y, 0f - z, 1f, 0f, 0f,     // front top    left
-                1f + x, 1f + y, 0f - z, 1f, 1f, 0f,     // front top    right
-                1f + x, 0f + y, 1f - z, 1f, 1f, 1f,     // back  bottom right
-                0f + x, 0f + y, 1f - z, 1f, 0f, 1f,     // back  bottom left
-                0f + x, 1f + y, 1f - z, 1f, 1f, 0f,     // back  top    left
-                1f + x, 1f + y, 1f - z, 0f, 1f, 1f      // back  top    right
+                1f + pos.X, 0f + pos.Y, 0f - pos.Z, r, g, b,     // front bottom right
+                0f + pos.X, 0f + pos.Y, 0f - pos.Z, r, g, b,     // front bottom left
+                0f + pos.X, 1f + pos.Y, 0f - pos.Z, r, g, b,     // front top    left
+                1f + pos.X, 1f + pos.Y, 0f - pos.Z, r, g, b,     // front top    right
+                1f + pos.X, 0f + pos.Y, 1f - pos.Z, r, g, b,     // back  bottom right
+                0f + pos.X, 0f + pos.Y, 1f - pos.Z, r, g, b,     // back  bottom left
+                0f + pos.X, 1f + pos.Y, 1f - pos.Z, r, g, b,     // back  top    left
+                1f + pos.X, 1f + pos.Y, 1f - pos.Z, r, g, b      // back  top    right
             });
 
             var step = counter * 8;

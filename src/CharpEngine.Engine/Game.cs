@@ -41,7 +41,7 @@ namespace CharpEngine
             CursorVisible = false;
             CursorGrabbed = true;
 
-            _testChunk = new Chunk(16);
+            _testChunk = new Chunk(8);
             _testChunk.Load(_shader);
 
             base.OnLoad();
