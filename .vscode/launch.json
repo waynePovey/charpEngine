@@ -5,21 +5,15 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": ".NET Core Launch (console)",
+      "name": "CharpEngine.Engine",
       "type": "coreclr",
       "request": "launch",
-      "preLaunchTask": "build",
-      "program": "${workspaceFolder}/src/CharpEngine.Engine/bin/Debug/netcoreapp3.1/CharpEngine.Engine.dll",
+      "preLaunchTask": "build_engine",
+      "program": "${workspaceFolder}/CharpEngine.Engine/bin/Debug/netcoreapp3.1/CharpEngine.Engine.dll",
       "args": [],
-      "cwd": "${workspaceFolder}/src/CharpEngine.Engine",
-      "console": "internalConsole",
-      "stopAtEntry": false
-    },
-    {
-      "name": ".NET Core Attach",
-      "type": "coreclr",
-      "request": "attach",
-      "processId": "${command:pickProcess}"
+      "cwd": "${workspaceFolder}/CharpEngine.Engine",
+      "stopAtEntry": false,
+      "console": "internalConsole"
     }
   ]
 }
