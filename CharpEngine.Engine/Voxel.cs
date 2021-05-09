@@ -1,5 +1,5 @@
 ﻿
-namespace CharpEngine
+namespace CharpEngine.Engine
 {
     public class Voxel
     {

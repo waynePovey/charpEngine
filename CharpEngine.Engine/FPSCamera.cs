@@ -1,7 +1,7 @@
 ﻿using System;
 using OpenTK.Mathematics;
 
-namespace CharpEngine
+namespace CharpEngine.Engine
 {
     public class FPSCamera : ICamera
     {

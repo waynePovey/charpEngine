@@ -1,7 +1,7 @@
 ﻿using OpenTK.Mathematics;
 using OpenTK.Windowing.Desktop;
 
-namespace CharpEngine
+namespace CharpEngine.Engine
 {
     public class Program
     {

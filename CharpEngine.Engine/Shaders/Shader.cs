@@ -4,7 +4,7 @@ using System.Text;
 using OpenTK.Graphics.ES30;
 using OpenTK.Mathematics;
 
-namespace CharpEngine.Shaders
+namespace CharpEngine.Engine.Shaders
 {
     public class Shader
     {
@@ -23,7 +23,7 @@ namespace CharpEngine.Shaders
             var infoLogVertex = GL.GetShaderInfoLog(vertexShader);
             if (infoLogVertex != string.Empty)
                 Console.WriteLine(infoLogVertex);
-            
+
 
             // Fragment shader
             using var fragmentReader = new StreamReader(fragmentPath, Encoding.UTF8);
@@ -42,7 +42,7 @@ namespace CharpEngine.Shaders
 
             GL.AttachShader(Handle, vertexShader);
             GL.AttachShader(Handle, fragmentShader);
-            
+
             GL.LinkProgram(Handle);
 
 

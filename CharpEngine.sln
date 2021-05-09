@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30503.244
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CharpEngine", "src/CharpEngine.Engine/CharpEngine.Engine.csproj", "{AFCBC255-DE48-433D-9C01-0FC125D41F52}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CharpEngine.Engine", "CharpEngine.Engine\CharpEngine.Engine.csproj", "{AFCBC255-DE48-433D-9C01-0FC125D41F52}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CharpEngine.GUI", "CharpEngine.GUI\CharpEngine.GUI.csproj", "{B23918D7-0373-43EE-9D75-629425CE3FBF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,11 +17,18 @@ Global
 		{AFCBC255-DE48-433D-9C01-0FC125D41F52}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AFCBC255-DE48-433D-9C01-0FC125D41F52}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AFCBC255-DE48-433D-9C01-0FC125D41F52}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B23918D7-0373-43EE-9D75-629425CE3FBF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B23918D7-0373-43EE-9D75-629425CE3FBF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B23918D7-0373-43EE-9D75-629425CE3FBF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B23918D7-0373-43EE-9D75-629425CE3FBF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {24C38E5C-EC53-42AB-B39D-8089055A1058}
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{B23918D7-0373-43EE-9D75-629425CE3FBF} = {7548CAC0-F65B-41D9-923B-F7752844DA15}
 	EndGlobalSection
 EndGlobal

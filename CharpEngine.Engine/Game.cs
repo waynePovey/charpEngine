@@ -1,11 +1,11 @@
-﻿using CharpEngine.Shaders;
+﻿using CharpEngine.Engine.Shaders;
 using OpenTK.Graphics.ES30;
 using OpenTK.Mathematics;
 using OpenTK.Windowing.Common;
 using OpenTK.Windowing.Desktop;
 using OpenTK.Windowing.GraphicsLibraryFramework;
 
-namespace CharpEngine
+namespace CharpEngine.Engine
 {
     public class Game : GameWindow
     {

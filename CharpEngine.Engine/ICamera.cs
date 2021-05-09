@@ -1,6 +1,6 @@
 using OpenTK.Mathematics;
 
-namespace CharpEngine
+namespace CharpEngine.Engine
 {
     public interface ICamera
     {

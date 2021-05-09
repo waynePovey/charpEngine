@@ -1,4 +1,4 @@
-namespace CharpEngine
+namespace CharpEngine.Engine
 {
     public enum VoxelType: byte
     {

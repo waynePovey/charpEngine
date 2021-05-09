@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using CharpEngine.Shaders;
+using CharpEngine.Engine.Shaders;
 using OpenTK.Graphics.ES30;
 
-namespace CharpEngine
+namespace CharpEngine.Engine
 {
     public class Chunk
     {
