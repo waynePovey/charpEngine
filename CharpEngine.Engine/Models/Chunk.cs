@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using CharpEngine.Engine.Models;
 using CharpEngine.Shaders;
 using OpenTK.Graphics.ES30;
 using OpenTK.Mathematics;
@@ -17,9 +18,9 @@ namespace CharpEngine
         private int _vertexArray;
 
 
-        public Chunk(int size)
+        public Chunk(VoxModel model)
         {
-            Size = size;
+            Size = Math.Max(Math.Max(model.SizeX, model.SizeY), model.SizeZ);
 
             _vertices = new List<float>();
             _indices = new List<uint>();
@@ -34,10 +35,16 @@ namespace CharpEngine
                     {
                         _voxels[x, y, z] = new Voxel()
                         {
-                            IsActive = true
+                            IsActive = false
                         };
                     }
                 }
+            }
+
+            foreach (var node in model.Voxels)
+            {
+                _voxels[node.X, node.Y, node.Z].IsActive = true;
+                _voxels[node.X, node.Y, node.Z].Color = model.ColorPalette[node.ColorPaletteIndex - 1];
             }
         }
 
@@ -54,7 +61,7 @@ namespace CharpEngine
                     {
                         if(_voxels[x, y, z].IsActive)
                         {
-                            CreateVoxel(new Vector3(x, y, z), counter);
+                            CreateVoxelMesh(new Vector3(x, y, z), counter, _voxels[x, y, z].Color);
                             counter++;
                         }
                     }
@@ -127,12 +134,11 @@ namespace CharpEngine
             GL.DeleteVertexArray(_vertexArray);
         }
 
-        private void CreateVoxel(Vector3 pos, uint counter)
+        private void CreateVoxelMesh(Vector3 pos, uint counter, Color color)
         {
-            Random rnd = new Random();
-            var r = (float)1 / 256 * rnd.Next(0, 255);
-            var g = (float)1 / 256 * rnd.Next(0, 255);
-            var b = (float)1 / 256 * rnd.Next(0, 255);
+            var r = (float)color.R / 256;
+            var g = (float)color.G / 256;
+            var b = (float)color.B / 256;
 
             _vertices.AddRange(new List<float>
             {

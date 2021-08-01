@@ -1,4 +1,5 @@
-﻿using CharpEngine.Shaders;
+﻿using CharpEngine.Engine.Utilities.Loaders;
+using CharpEngine.Shaders;
 using OpenTK.Graphics.ES30;
 using OpenTK.Mathematics;
 using OpenTK.Windowing.Common;
@@ -11,12 +12,12 @@ namespace CharpEngine
     {
         private Shader _shader;
         private FPSCamera _camera;
-        private const float _cameraSpeed = 1.5f;
+        private const float _cameraSpeed = 5f;
         private const float _cameraSensitivity = 0.3f;
         private float _aspectRatio;
         private Vector3 _initCameraPos;
         private Chunk _testChunk;
-
+        private VoxLoader _voxLoader;
 
         public Game(
             GameWindowSettings gameWindowSettings,
@@ -41,7 +42,10 @@ namespace CharpEngine
             CursorVisible = false;
             CursorGrabbed = true;
 
-            _testChunk = new Chunk(8);
+            _voxLoader = new VoxLoader();
+
+            var model = _voxLoader.Read("Assets/p38.vox");
+            _testChunk = new Chunk(model);
             _testChunk.Load(_shader);
 
             base.OnLoad();
